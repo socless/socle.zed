@@ -1,0 +1,30 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: Test and build
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v7
+
+      # rust-toolchain.toml picks the toolchain and the wasm32-wasip2 target
+      - name: Unit tests
+        run: cargo test
+
+      - name: Clippy
+        run: |
+          rustup component add clippy
+          cargo clippy --target wasm32-wasip2 -- -D warnings
+
+      - name: Build the extension
+        run: cargo build --release --target wasm32-wasip2
