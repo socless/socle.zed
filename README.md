@@ -138,4 +138,8 @@ in `zed: extensions` picks it up.
 
 ## License
 
-MIT
+Copyright (C) 2026 Iban Guinebert. The extension is licensed under the GNU GPL-3.0-only (see
+[LICENSE](LICENSE)), the closest copyleft licence Zed's extension registry accepts. The Socle server
+it downloads is licensed under the AGPL-3.0: see Socle's
+[LICENSING.md](https://github.com/socless/socle/blob/main/LICENSING.md). Contributions are accepted
+under Socle's [Contributor License Agreement](https://github.com/socless/socle/blob/main/CLA.md).
