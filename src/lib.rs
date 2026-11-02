@@ -1,4 +1,4 @@
-//! SoCLess in Zed: starts the SoCLess language server (`socless-lsp`) on the
+//! Socle in Zed: starts the Socle language server (`socle-lsp`) on the
 //! Scala files of Mill projects. The server does the rest over plain LSP:
 //! the View design / Simulate code lenses and the live panel in the browser.
 
@@ -11,14 +11,14 @@ use zed_extension_api::{
 };
 
 /// The name of the server in Zed's `lsp` settings and in extension.toml.
-const SERVER: &str = "socless";
+const SERVER: &str = "socle";
 
-struct Socless {
+struct Socle {
     /// The pinned jar once it is there and its sha256 checked.
     jar: Option<String>,
 }
 
-impl Socless {
+impl Socle {
     /// The pinned server jar, downloaded into the extension's directory and
     /// checked against its sha256 the first time.
     fn jar(&mut self, id: &LanguageServerId) -> Result<String> {
@@ -34,9 +34,9 @@ impl Socless {
                 .map_err(|e| server::download_failed(&url, &e))
                 .and_then(|()| {
                     if matches(&part) {
-                        fs::rename(&part, &name).map_err(|e| format!("SoCLess: cannot keep {name}: {e}"))
+                        fs::rename(&part, &name).map_err(|e| format!("Socle: cannot keep {name}: {e}"))
                     } else {
-                        Err(format!("SoCLess: {url} does not have the expected sha256 {}", server::PINNED_SHA256))
+                        Err(format!("Socle: {url} does not have the expected sha256 {}", server::PINNED_SHA256))
                     }
                 });
             let _ = fs::remove_file(&part);
@@ -57,9 +57,9 @@ fn matches(path: &str) -> bool {
     fs::read(path).is_ok_and(|bytes| server::sha256_hex(&bytes) == server::PINNED_SHA256)
 }
 
-impl zed::Extension for Socless {
+impl zed::Extension for Socle {
     fn new() -> Self {
-        Socless { jar: None }
+        Socle { jar: None }
     }
 
     fn language_server_command(&mut self, id: &LanguageServerId, worktree: &zed::Worktree) -> Result<zed::Command> {
@@ -80,7 +80,7 @@ impl zed::Extension for Socless {
         Ok(zed::Command { command, args, env: env.map(|e| e.into_iter().collect()).unwrap_or_default() })
     }
 
-    /// `lsp.socless.initialization_options`, flat: the wave settings.
+    /// `lsp.socle.initialization_options`, flat: the wave settings.
     fn language_server_initialization_options(
         &mut self,
         _id: &LanguageServerId,
@@ -89,7 +89,7 @@ impl zed::Extension for Socless {
         Ok(LspSettings::for_worktree(SERVER, worktree).ok().and_then(|s| s.initialization_options))
     }
 
-    /// The same options under `socless`, the section the server reads from
+    /// The same options under `socle`, the section the server reads from
     /// `workspace/didChangeConfiguration`: a settings change applies without a restart.
     fn language_server_workspace_configuration(
         &mut self,
@@ -98,8 +98,8 @@ impl zed::Extension for Socless {
     ) -> Result<Option<serde_json::Value>> {
         Ok(self
             .language_server_initialization_options(id, worktree)?
-            .map(|o| serde_json::json!({ "socless": o })))
+            .map(|o| serde_json::json!({ "socle": o })))
     }
 }
 
-zed::register_extension!(Socless);
+zed::register_extension!(Socle);

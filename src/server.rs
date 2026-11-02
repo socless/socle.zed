@@ -4,16 +4,16 @@
 use sha2::{Digest, Sha256};
 
 /// The GitHub repository the server releases come from.
-pub const REPO: &str = "e-ban/SoCless";
+pub const REPO: &str = "socless/socle";
 
-/// The SoCLess release this extension is tested against.
-pub const PINNED: &str = "0.17.0";
+/// The Socle release this extension is tested against.
+pub const PINNED: &str = "0.22.0";
 
-/// The sha256 of the PINNED release's socless-lsp jar. Bump it together with PINNED.
-pub const PINNED_SHA256: &str = "7b8f2aee7d30d5c70a03b3e1fd1be8a48bfb248dec6e4bc6d2bff37d3f59c018";
+/// The sha256 of the PINNED release's socle-lsp jar. Bump it together with PINNED.
+pub const PINNED_SHA256: &str = "00a87b04b681f38a8860445092bfad595c329aee223ac80a28d15a9d0cd01a95";
 
 pub fn jar_name(version: &str) -> String {
-    format!("socless-lsp-{version}.jar")
+    format!("socle-lsp-{version}.jar")
 }
 
 pub fn jar_url(version: &str) -> String {
@@ -25,12 +25,12 @@ pub fn sha256_hex(bytes: &[u8]) -> String {
     Sha256::digest(bytes).iter().map(|b| format!("{b:02x}")).collect()
 }
 
-/// The arguments that start the server in `jar` (as socless.nvim does).
+/// The arguments that start the server in `jar` (as socle.nvim does).
 pub fn default_args(jar: &str) -> Vec<String> {
     vec!["-Djava.net.preferIPv4Stack=true".into(), "-jar".into(), jar.into()]
 }
 
-/// The `java` to run: the `lsp.socless.binary.path` setting, else
+/// The `java` to run: the `lsp.socle.binary.path` setting, else
 /// `$JAVA_HOME/bin/java`, else `java` on `PATH`.
 pub fn java(setting: Option<String>, java_home: Option<String>, on_path: Option<String>) -> Option<String> {
     setting
@@ -42,17 +42,17 @@ pub fn java(setting: Option<String>, java_home: Option<String>, on_path: Option<
 /// repository is private, it always does, so say how to use a local jar.
 pub fn download_failed(url: &str, err: &str) -> String {
     format!(
-        "SoCLess: cannot download {url} ({err}). While e-ban/SoCless is private, build the jar \
-         (./mill socless-lsp.assembly) and set lsp.socless.binary.arguments to \
-         [\"-jar\", \"/path/to/socless-lsp.jar\"] in Zed's settings (see the README)"
+        "Socle: cannot download {url} ({err}). While socless/socle is private, build the jar \
+         (./mill socle-lsp.assembly) and set lsp.socle.binary.arguments to \
+         [\"-jar\", \"/path/to/socle-lsp.jar\"] in Zed's settings (see the README)"
     )
 }
 
 pub const NO_JAVA: &str =
-    "SoCLess: no java found (Java 21 or newer): set JAVA_HOME, put java on PATH or set lsp.socless.binary.path";
+    "Socle: no java found (Java 21 or newer): set JAVA_HOME, put java on PATH or set lsp.socle.binary.path";
 
 pub const NOT_MILL: &str =
-    "SoCLess: no build.mill at the root of this worktree; the SoCLess server runs only in Mill projects";
+    "Socle: no build.mill at the root of this worktree; the Socle server runs only in Mill projects";
 
 #[cfg(test)]
 mod tests {
@@ -62,7 +62,7 @@ mod tests {
     fn url_of_the_pinned_jar() {
         assert_eq!(
             jar_url(PINNED),
-            "https://github.com/e-ban/SoCless/releases/download/v0.17.0/socless-lsp-0.17.0.jar"
+            "https://github.com/socless/socle/releases/download/v0.22.0/socle-lsp-0.22.0.jar"
         );
     }
 
@@ -89,6 +89,6 @@ mod tests {
     #[test]
     fn download_error_names_the_setting() {
         let m = download_failed("https://u", "404");
-        assert!(m.contains("https://u (404)") && m.contains("lsp.socless.binary.arguments"));
+        assert!(m.contains("https://u (404)") && m.contains("lsp.socle.binary.arguments"));
     }
 }

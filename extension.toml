@@ -1,11 +1,11 @@
-id = "socless"
-name = "SoCLess"
+id = "socle"
+name = "Socle"
 version = "0.1.0"
 schema_version = 1
 authors = ["Iban Guinebert <iban.guinebert@gmail.com>"]
 description = "Chisel IDE: View design and Simulate lenses on ChiselSim tests, with a live schematic in your browser"
-repository = "https://github.com/e-ban/socless.zed"
+repository = "https://github.com/socless/socle.zed"
 
-[language_servers.socless]
-name = "SoCLess"
+[language_servers.socle]
+name = "Socle"
 languages = ["Scala"]
