@@ -38,11 +38,11 @@ pub fn java(setting: Option<String>, java_home: Option<String>, on_path: Option<
         .or(on_path)
 }
 
-/// Why there is no server without a jar: the download failed. While the
-/// repository is private, it always does, so say how to use a local jar.
+/// Why there is no server without a jar: the download failed (offline, a
+/// proxy). Say how to use a local jar instead.
 pub fn download_failed(url: &str, err: &str) -> String {
     format!(
-        "Socle: cannot download {url} ({err}). While socless/socle is private, build the jar \
+        "Socle: cannot download {url} ({err}). To use a local jar, build it \
          (./mill socle-lsp.assembly) and set lsp.socle.binary.arguments to \
          [\"-jar\", \"/path/to/socle-lsp.jar\"] in Zed's settings (see the README)"
     )

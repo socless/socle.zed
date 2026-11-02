@@ -18,28 +18,6 @@ modified. The server itself is described in Socle's
 Compared with VS Code and Neovim, the panel does not follow the cursor: that
 needs a custom LSP notification, which Zed extensions cannot send.
 
-## Private repository
-
-Both repositories (socless/socle and socless/socle.zed) are private for now, so
-the extension is not in Zed's registry, and the server jar download fails (404).
-Until they are public:
-
-1. Build the server jar in a Socle checkout and copy it out of `out/`:
-
-   ```bash
-   ./mill socle-lsp.assembly
-   cp out/socle-lsp/assembly.dest/out.jar ~/.local/share/socle/socle-lsp.jar
-   ```
-
-2. Point the extension at it in Zed's settings (see [Settings](#settings)):
-
-   ```jsonc
-   "lsp": { "socle": { "binary": { "arguments": ["-jar", "/home/you/.local/share/socle/socle-lsp.jar"] } } }
-   ```
-
-Without it, the server does not start and Zed's log
-(`zed: open log`) says `Socle: cannot download ...` with this hint.
-
 ## Requirements
 
 - Zed with LSP code lens support (May 2026 or later; tested with 1.25.3).
@@ -55,11 +33,11 @@ Without it, the server does not start and Zed's log
 
 ## Install
 
-While the repository is private, install it as a dev extension. Zed builds it
+The extension is not in Zed's registry yet: install it as a dev extension. Zed builds it
 with Rust, so you need [rustup](https://rustup.rs/) (the
 `rust-toolchain.toml` here picks the toolchain and its `wasm32-wasip2` target):
 
-1. `git clone git@github.com:socless/socle.zed.git`
+1. `git clone https://github.com/socless/socle.zed.git`
 2. In Zed: `zed: extensions`, then **Install Dev Extension**, and pick the clone.
 
 Then turn the code lenses on, which Zed leaves off by default:
