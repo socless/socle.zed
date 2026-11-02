@@ -7,10 +7,10 @@ use sha2::{Digest, Sha256};
 pub const REPO: &str = "socless/socle";
 
 /// The Socle release this extension is tested against.
-pub const PINNED: &str = "0.22.0";
+pub const PINNED: &str = "0.23.0";
 
 /// The sha256 of the PINNED release's socle-lsp jar. Bump it together with PINNED.
-pub const PINNED_SHA256: &str = "00a87b04b681f38a8860445092bfad595c329aee223ac80a28d15a9d0cd01a95";
+pub const PINNED_SHA256: &str = "c34be889b42a70c09952f0a4b38fa18c1f02e6eb0c51e1a52be32185d3065c31";
 
 pub fn jar_name(version: &str) -> String {
     format!("socle-lsp-{version}.jar")
@@ -62,7 +62,7 @@ mod tests {
     fn url_of_the_pinned_jar() {
         assert_eq!(
             jar_url(PINNED),
-            "https://github.com/socless/socle/releases/download/v0.22.0/socle-lsp-0.22.0.jar"
+            "https://github.com/socless/socle/releases/download/v0.23.0/socle-lsp-0.23.0.jar"
         );
     }
 
