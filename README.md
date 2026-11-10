@@ -96,7 +96,7 @@ All of them go under `lsp.socle` in Zed's `settings.json`:
 
 ## The pinned server
 
-The extension downloads Socle 0.25.1's `socle-lsp-0.25.1.jar` once, into
+The extension downloads Socle 0.25.2's `socle-lsp-0.25.2.jar` once, into
 its own directory, and runs it after checking its sha256. Both are in
 `src/server.rs` (`PINNED` and `PINNED_SHA256`); to bump the server, change both
 and this README, and bump the extension's version in `extension.toml` and
